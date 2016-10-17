@@ -283,7 +283,19 @@ public abstract class Critter {
 		for(Critter c : population){
 			c.doTimeStep();
 		}
-				
+		
+		//simulate encounters 
+		for(Critter fighter : population){
+			for(Critter receiver : population){
+				if(!fighter.equals(receiver) && receiver.x_coord == fighter.x_coord && receiver.y_coord == fighter.y_coord){
+					simulateEncounter(fighter, receiver);
+					//he lost so remove him 
+					if(fighter.energy <= 0){
+						break;
+					}
+				}
+			}
+		}
 		//add babies 
 		population.addAll(babies);
 		
@@ -293,6 +305,44 @@ public abstract class Critter {
 				population.remove(c);
 			}
 		}
+	}
+	
+	public static void simulateEncounter(Critter fighter, Critter receiver){
+		
+		//dead bugs can't fight 
+		if(fighter.energy == 0 || receiver.energy == 0) { return; }
+		
+		//check if they want to fight 
+		boolean fighterRes = fighter.fight(receiver.toString());
+		boolean receiverRes = receiver.fight(fighter.toString());
+		
+		//check if still in same spot 
+		if(!(fighter.x_coord == receiver.x_coord) || !(fighter.y_coord == receiver.x_coord)){
+			return;
+		}
+		if(fighter.energy == 0 || receiver.energy == 0) { return; }
+	
+		//both want to fight then 
+		int rollFight = 0;
+		if(fighterRes){
+			rollFight = getRandomInt(fighter.energy);
+		}
+		
+		int rollRec = 0;
+		if(receiverRes){
+			rollRec =  getRandomInt(receiver.energy);
+		}
+		
+		//who wins?
+		if(rollFight>rollRec){
+			fighter.energy += 0.5*receiver.energy;
+			receiver.energy = 0;
+		}
+		else{
+			receiver.energy += 0.5*fighter.energy;
+			fighter.energy = 0;
+		}
+		
 	}
 	
 	public static void displayWorld() {}
