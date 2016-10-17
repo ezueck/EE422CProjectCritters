@@ -27,6 +27,7 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
+	private static List<Critter> fightQueue;
 
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
@@ -51,17 +52,24 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
+	private boolean moved; 
 	
 	protected final void walk(int direction) {
 		// MERDE
 		energy -= Params.walk_energy_cost;
-		my_move_fct(direction, 1);
+		if(!moved){ //move only once per turn 
+			moved = true;
+			my_move_fct(direction, 1);
+		}
 	}
 	
 	protected final void run(int direction) {
 		// MERDE
 		energy -= Params.run_energy_cost;
-		my_move_fct(direction, 2);
+		if(!moved){ //move only once per turn 
+			moved = true;
+			my_move_fct(direction, 2);
+		}
 	}
 	
 	// MERDE
@@ -105,13 +113,14 @@ public abstract class Critter {
 		//check if parent has enough energy to reproduce 
 		if(energy<Params.min_reproduce_energy){return;}
 		
-		//change healths 
+		//change health
 		offspring.energy = (int) Math.floor(0.5*energy);
 		energy = (int) Math.ceil(0.5*energy);
 		
 		//give the child a position
 		offspring.x_coord = x_coord;
 		offspring.y_coord = y_coord;
+		offspring.moved = false;
 		offspring.my_move_fct(direction, 1);
 	}
 	
@@ -145,6 +154,7 @@ public abstract class Critter {
 		newOne.energy = Params.start_energy;
 		newOne.x_coord = getRandomInt(Params.world_width);
 		newOne.y_coord = getRandomInt(Params.world_height);
+		newOne.moved = false;
 		
 		//add it to the population
 		population.add(newOne);
@@ -284,18 +294,30 @@ public abstract class Critter {
 			c.doTimeStep();
 		}
 		
-		//simulate encounters 
+		//iterate through Critters that need to fight 
 		for(Critter fighter : population){
-			for(Critter receiver : population){
+			for(Critter receiver : population){ //check against the whole population
 				if(!fighter.equals(receiver) && receiver.x_coord == fighter.x_coord && receiver.y_coord == fighter.y_coord){
 					simulateEncounter(fighter, receiver);
-					//he lost so remove him 
-					if(fighter.energy <= 0){
+					if(fighter.energy <= 0){ //he lost so no more fighting for him
 						break;
 					}
 				}
 			}
 		}
+		
+		//update rest energy
+		for(Critter c : population){
+			c.energy -= Params.rest_energy_cost;
+		}
+		
+		//spontaneous algae 
+		for(int i =0; i<Params.refresh_algae_count; i++){
+			Critter newAlg = new Algae();
+			newAlg.x_coord = getRandomInt(Params.world_width);
+			newAlg.y_coord = getRandomInt(Params.world_height);
+		}
+		
 		//add babies 
 		population.addAll(babies);
 		
@@ -305,6 +327,13 @@ public abstract class Critter {
 				population.remove(c);
 			}
 		}
+		
+		//reset the movement flag for all critters
+		for(Critter c : population){
+			c.moved = false; 
+		}
+		
+
 	}
 	
 	public static void simulateEncounter(Critter fighter, Critter receiver){
@@ -342,6 +371,7 @@ public abstract class Critter {
 			receiver.energy += 0.5*fighter.energy;
 			fighter.energy = 0;
 		}
+		
 		
 	}
 	
