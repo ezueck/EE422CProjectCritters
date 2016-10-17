@@ -302,6 +302,8 @@ public abstract class Critter {
 	 * Clear the world of all critters, dead and alive
 	 */
 	public static void clearWorld() {
+		population.clear();
+		babies.clear();
 	}
 	
 	public static void worldTimeStep() {
@@ -394,5 +396,37 @@ public abstract class Critter {
 		}
 	}
 	
-	public static void displayWorld() {}
+	public static void displayWorld() {
+		// display top boarder
+		System.out.print("+");
+		for(int i = 0; i < Params.world_width; i++){
+			System.out.print("-");
+		}
+		System.out.print("+");
+		// print world row by row. left border first then all critters or blank spaces than right boarder
+		for(int i = 0; i < Params.world_height; i++){
+			System.out.println();
+			System.out.print("|");
+			for(int j = 0; j < Params.world_width; j++){
+				for(int k = 0; k < population.size(); k++){
+					// check if theres a critter  at the location marked (j,i)
+					if((population.get(k).x_coord == j) && (population.get(k).y_coord == i)){
+						System.out.print(population.get(k).toString());
+					}
+					else{
+						System.out.print(" ");
+					}
+				}
+			}
+			System.out.print("|");
+		}
+		System.out.println();
+		
+		// print bottom boarder
+		System.out.print("+");
+		for(int i = 0; i < Params.world_width; i++){
+			System.out.print("-");
+		}
+		System.out.print("+");
+	}
 }
