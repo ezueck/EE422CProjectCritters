@@ -278,6 +278,21 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
+		
+		//run all of the doTimeSteps 
+		for(Critter c : population){
+			c.doTimeStep();
+		}
+				
+		//add babies 
+		population.addAll(babies);
+		
+		//get rid of all the dead Critters 
+		for(Critter c : population){
+			if(c.energy<=0){
+				population.remove(c);
+			}
+		}
 	}
 	
 	public static void displayWorld() {}
