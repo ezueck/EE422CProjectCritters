@@ -13,6 +13,8 @@
 package assignment4;
 
 import java.util.List;
+import java.util.*;
+import java.lang.Math.*;
 
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
@@ -98,7 +100,20 @@ public abstract class Critter {
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
+		
+		//check if parent has enough energy to reproduce 
+		if(energy<Params.min_reproduce_energy){return;}
+		
+		//change healths 
+		offspring.energy = (int) Math.floor(0.5*energy);
+		energy = (int) Math.ceil(0.5*energy);
+		
+		//give the child a position
+		offspring.x_coord = x_coord;
+		offspring.y_coord = y_coord;
+		offspring.my_move_fct(direction, 1);
 	}
+	
 
 	public abstract void doTimeStep();
 	public abstract boolean fight(String oponent);
