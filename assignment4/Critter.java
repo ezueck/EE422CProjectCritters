@@ -27,7 +27,8 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
-
+	private static boolean moveFight = false; 
+	
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
 		myPackage = Critter.class.getPackage().toString().split(" ")[1];
@@ -56,23 +57,26 @@ public abstract class Critter {
 	protected final void walk(int direction) {
 		// MERDE
 		energy -= Params.walk_energy_cost;
-		if(!moved){ //move only once per turn 
-			moved = true;
-			my_move_fct(direction, 1);
-		}
+	    my_move_fct(direction, 1);
 	}
 	
 	protected final void run(int direction) {
 		// MERDE
-		energy -= Params.run_energy_cost;
-		if(!moved){ //move only once per turn 
-			moved = true;
-			my_move_fct(direction, 2);
-		}
+		energy -= Params.run_energy_cost;;
+	    my_move_fct(direction, 2);
 	}
 	
 	// MERDE
 	protected final void my_move_fct(int direction, int amount){
+		
+		//don't move if you have moved this time step 
+		if(moved){ return;}
+		
+		//record of old x_coord and y_coord 
+		int oldX = x_coord;
+		int oldY = y_coord;
+		
+		//move the bug 
 		switch(direction){
 		case 0:
 			x_coord += amount;
@@ -105,6 +109,20 @@ public abstract class Critter {
 		default:
 			break;
 		}
+		
+		//if the movement is during a fight, we can't move to an occupied spot 
+		if(moveFight){
+			for(Critter c : population){
+				if(!(c.equals(this)) && c.x_coord == x_coord && c.y_coord == y_coord){
+					x_coord = oldX;
+					y_coord = oldY;
+					return;
+				}
+			}
+		}
+		
+		//set the true flag if we actually moved
+		moved = true;
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
@@ -293,6 +311,7 @@ public abstract class Critter {
 			c.doTimeStep();
 		}
 		
+		moveFight = true;
 		//iterate through Critters that need to fight 
 		for(Critter fighter : population){
 			for(Critter receiver : population){ //check against the whole population
@@ -304,6 +323,8 @@ public abstract class Critter {
 				}
 			}
 		}
+		
+		moveFight = false;
 		
 		//update rest energy
 		for(Critter c : population){
@@ -362,7 +383,7 @@ public abstract class Critter {
 			rollRec =  getRandomInt(receiver.energy + 1);
 		}
 		
-		//who wins?
+		//check who won the roll 
 		if(rollFight>rollRec){
 			fighter.energy += 0.5*receiver.energy;
 			receiver.energy = 0;
