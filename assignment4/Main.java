@@ -77,7 +77,7 @@ public class Main {
         while(!done){
         	System.out.print("critters>");
         	keyboard_in = kb.nextLine();
-        	String[] kb_inputs = keyboard_in.split(" ");
+        	String[] kb_inputs = keyboard_in.split(" ");	// splits the keyboard input into separate strings ie make Craig 25 will result in 3 strings
         	if(kb_inputs.length == 0){
         		// do nothing ie no command was inputed
         	}
@@ -91,9 +91,9 @@ public class Main {
         		// check for the number of steps
         		int step_count = 0;
         		if(kb_inputs.length == 1){
-        			step_count = 1; 
+        			step_count = 1;			// the command did not include a count thus set count to 1
         		}
-        		else if(kb_inputs.length == 2){
+        		else if(kb_inputs.length == 2){		// the command included a count
         			step_count = getInt(kb_inputs[1]);
         			if(step_count == -1){
         				step_count = 0;
@@ -110,7 +110,7 @@ public class Main {
         	else if(kb_inputs[0].contentEquals("seed")){
         		long seed = 0;
         		// get seed from keyboard
-        		if(kb_inputs.length == 1){
+        		if(kb_inputs.length == 1){		// no seed number was included in command, set to 1
         			seed = 1; 
         		}
         		else if(kb_inputs.length == 2){
@@ -177,10 +177,13 @@ public class Main {
     }
     
     
+	
+	// takes a string of integer and converts it to type int
+	// returns -1 if string contained non numerical char
     static int getInt(String number){
     	int count = 0;
     	for(int i = 0; i < number.length(); i++){
-			if(((number.charAt(i) - '0') >= 0) && ((number.charAt(i) - '0') <= 9)){
+			if(((number.charAt(i) - '0') >= 0) && ((number.charAt(i) - '0') <= 9)){	// checks that the char is a number
 				count *= 10;
 				count += number.charAt(i) - '0';
 			}
