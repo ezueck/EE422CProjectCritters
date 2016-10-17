@@ -46,10 +46,10 @@ public class Critter4 extends Critter {
 		//tries to run or walk 
 		int random = getRandomInt(2);
 		if(random%2==0){
-			run(dir);
+			runFight(dir);
 		}
 		else{
-			walk(dir);
+			walkFight(dir);
 		}
 		
 		return false; 

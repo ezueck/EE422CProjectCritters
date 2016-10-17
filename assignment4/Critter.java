@@ -319,6 +319,7 @@ public abstract class Critter {
 		
 		//add babies 
 		population.addAll(babies);
+		babies.clear();
 		
 		//get rid of all the dead Critters 
 		for(Critter c : population){
@@ -370,8 +371,6 @@ public abstract class Critter {
 			receiver.energy += 0.5*fighter.energy;
 			fighter.energy = 0;
 		}
-		
-		
 	}
 	
 	public static void displayWorld() {}
