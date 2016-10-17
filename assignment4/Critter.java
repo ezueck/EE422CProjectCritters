@@ -143,8 +143,8 @@ public abstract class Critter {
 		
 		//initialize our values 
 		newOne.energy = Params.start_energy;
-		newOne.x_coord = getRandomInt(Params.world_width-1);
-		newOne.y_coord = getRandomInt(Params.world_height-1);
+		newOne.x_coord = getRandomInt(Params.world_width);
+		newOne.y_coord = getRandomInt(Params.world_height);
 		
 		//add it to the population
 		population.add(newOne);
@@ -325,12 +325,12 @@ public abstract class Critter {
 		//both want to fight then 
 		int rollFight = 0;
 		if(fighterRes){
-			rollFight = getRandomInt(fighter.energy);
+			rollFight = getRandomInt(fighter.energy + 1);
 		}
 		
 		int rollRec = 0;
 		if(receiverRes){
-			rollRec =  getRandomInt(receiver.energy);
+			rollRec =  getRandomInt(receiver.energy + 1);
 		}
 		
 		//who wins?
