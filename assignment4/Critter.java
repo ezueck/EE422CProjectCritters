@@ -165,8 +165,33 @@ public abstract class Critter {
 	 * @throws InvalidCritterException
 	 */
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
+		
 		List<Critter> result = new java.util.ArrayList<Critter>();
-	
+		Class <?> newCritter;
+		Critter testCrit;
+		
+		//try to get an object of the class critter_class_name
+		try{ 
+			newCritter = Class.forName(critter_class_name);	
+			Constructor<?> newConstructor = newCritter.getConstructor();
+			Object obj = newConstructor.newInstance();
+			//test critter
+			testCrit = (Critter) obj;
+		}
+		
+		//didn't exist, so throw InvalidCritterException
+		catch(Exception e){
+			throw new InvalidCritterException(critter_class_name);
+		}
+		
+		//add all the critter of the same class 
+		for (Critter crit : population){
+			if(crit.getClass().equals(testCrit.getClass())){
+				result.add(crit);
+			}
+		}
+		
+		//return our list 
 		return result;
 	}
 	
