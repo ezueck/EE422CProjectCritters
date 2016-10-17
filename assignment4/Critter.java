@@ -109,6 +109,18 @@ public abstract class Critter {
 		default:
 			break;
 		}
+		if(x_coord >= Params.world_width){
+			x_coord = 0;
+		}
+		if(x_coord < 0){
+			x_coord = Params.world_width - 1;
+		}
+		if(y_coord >= Params.world_height){
+			y_coord = 0;
+		}
+		if(y_coord < 0){
+			y_coord = Params.world_height - 1;
+		}
 		
 		//if the movement is during a fight, we can't move to an occupied spot 
 		if(moveFight){
