@@ -50,10 +50,51 @@ public abstract class Critter {
 	private int y_coord;
 	
 	protected final void walk(int direction) {
+		// MERDE
+		energy -= Params.walk_energy_cost;
+		my_move_fct(direction, 1);
 	}
 	
 	protected final void run(int direction) {
-		
+		// MERDE
+		energy -= Params.run_energy_cost;
+		my_move_fct(direction, 2);
+	}
+	
+	// MERDE
+	protected final void my_move_fct(int direction, int amount){
+		switch(direction){
+		case 0:
+			x_coord += amount;
+			break;
+		case 1:
+			x_coord += amount;
+			y_coord += amount;
+			break;
+		case 2:
+			y_coord += amount;
+			break;
+		case 3:
+			x_coord -= amount;
+			y_coord += amount;
+			break;
+		case 4:
+			x_coord -= amount;
+			break;
+		case 5:
+			x_coord -= amount;
+			y_coord -= amount;
+			break;
+		case 6:
+			y_coord -= amount;
+			break;
+		case 7:
+			x_coord += amount;
+			y_coord -= amount;
+			break;
+		default:
+			break;
+		}
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
