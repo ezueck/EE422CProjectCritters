@@ -383,7 +383,7 @@ public abstract class Critter {
 			rollRec =  getRandomInt(receiver.energy + 1);
 		}
 		
-		//check who won the roll 
+		//check who won the roll and give energy 
 		if(rollFight>rollRec){
 			fighter.energy += 0.5*receiver.energy;
 			receiver.energy = 0;
