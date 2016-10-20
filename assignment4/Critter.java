@@ -172,7 +172,7 @@ public abstract class Critter {
 		//try to make the critter if not throw our exception
 		try{
 		//get constructor for our new Critter
-		Class <?> newCritter = Class.forName(critter_class_name);
+		Class <?> newCritter = Class.forName(myPackage + "." + critter_class_name);
 		Constructor<?> newConstructor = newCritter.getConstructor();
 		Object obj = newConstructor.newInstance();
 		
@@ -211,7 +211,7 @@ public abstract class Critter {
 		
 		//try to get an object of the class critter_class_name
 		try{ 
-			newCritter = Class.forName(critter_class_name);	
+			newCritter = Class.forName(myPackage + "." + critter_class_name);	
 			Constructor<?> newConstructor = newCritter.getConstructor();
 			Object obj = newConstructor.newInstance();
 			//test critter
@@ -350,6 +350,8 @@ public abstract class Critter {
 			Critter newAlg = new Algae();
 			newAlg.x_coord = getRandomInt(Params.world_width);
 			newAlg.y_coord = getRandomInt(Params.world_height);
+			newAlg.energy = Params.start_energy;
+			population.add(newAlg);
 		}
 		
 		//add babies 
@@ -357,9 +359,11 @@ public abstract class Critter {
 		babies.clear();
 		
 		//get rid of all the dead Critters 
-		for(Critter c : population){
+		for(int i = 0; i<population.size(); i++){
+			Critter c = population.get(i);
 			if(c.energy<=0){
-				population.remove(c);
+				population.remove(i);
+				i--;
 			}
 		}
 		
@@ -418,19 +422,22 @@ public abstract class Critter {
 		// print world row by row. left border first then all critters or blank spaces than right boarder
 		for(int i = 0; i < Params.world_height; i++){
 			System.out.println();
-			System.out.print("|");
-			for(int j = 0; j < Params.world_width; j++){
-				for(int k = 0; k < population.size(); k++){
+			for(int j = 0; j < Params.world_width + 1; j++){
+				if(j==0 || j == Params.world_width){  System.out.print("|");}
+				
+				boolean found = false;
+				for(int k = 0; k < population.size() && !found; k++){
 					// check if theres a critter  at the location marked (j,i)
 					if((population.get(k).x_coord == j) && (population.get(k).y_coord == i)){
 						System.out.print(population.get(k).toString());
-					}
-					else{
-						System.out.print(" ");
+						found = true;
 					}
 				}
+				
+				if(!found){
+					System.out.print(" ");
+				}
 			}
-			System.out.print("|");
 		}
 		System.out.println();
 		
@@ -439,6 +446,6 @@ public abstract class Critter {
 		for(int i = 0; i < Params.world_width; i++){
 			System.out.print("-");
 		}
-		System.out.print("+");
+		System.out.print("+\n");
 	}
 }

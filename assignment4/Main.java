@@ -11,8 +11,10 @@
  * Fall 2016
  */
 package assignment4; // cannot be in default package
+import java.util.List;
 import java.util.Scanner;
 import java.io.*;
+import java.lang.reflect.Method;
 
 
 /*
@@ -160,8 +162,11 @@ public class Main {
         	else if(kb_inputs[0].contentEquals("stats")){
         		try {
 					List<Critter> my_list = Critter.getInstances(kb_inputs[1]);
-					Critter.runStats(my_list);
-				} catch (InvalidCritterException e) {
+					Class<?> c = Class.forName(myPackage + "." + kb_inputs[1]);	
+					Method stats = c.getMethod("runStats", List.class);
+					stats.invoke(null, my_list);
+					
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -176,8 +181,7 @@ public class Main {
 
     }
     
-    
-	
+
 	// takes a string of integer and converts it to type int
 	// returns -1 if string contained non numerical char
     static int getInt(String number){
