@@ -38,7 +38,7 @@ public class Critter3 extends Critter{
 		}
 		
 		//decided to run
-		runFight(dir);
+		run(dir);
 		return false;
 	}
 }
