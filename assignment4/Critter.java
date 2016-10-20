@@ -385,7 +385,7 @@ public abstract class Critter {
 		boolean receiverRes = receiver.fight(fighter.toString());
 		
 		//check if still in same spot 
-		if(!(fighter.x_coord == receiver.x_coord) || !(fighter.y_coord == receiver.x_coord)){
+		if(!(fighter.x_coord == receiver.x_coord) || !(fighter.y_coord == receiver.y_coord)){
 			return;
 		}
 		if(fighter.energy == 0 || receiver.energy == 0) { return; }

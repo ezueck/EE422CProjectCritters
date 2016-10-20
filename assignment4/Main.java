@@ -154,6 +154,7 @@ public class Main {
     					} catch (InvalidCritterException e) {
     						// TODO Auto-generated catch block // MERDE
     						e.printStackTrace();
+    						System.out.print("\n");
     					}
             		}
             		
@@ -169,6 +170,7 @@ public class Main {
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					System.out.print("\n");
 				}
         	}
         	else{
