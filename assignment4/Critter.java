@@ -378,7 +378,7 @@ public abstract class Critter {
 	public static void simulateEncounter(Critter fighter, Critter receiver){
 		
 		//dead bugs can't fight 
-		if(fighter.energy == 0 || receiver.energy == 0) { return; }
+		if(fighter.energy <= 0 || receiver.energy <= 0) { return; }
 		
 		//check if they want to fight 
 		boolean fighterRes = fighter.fight(receiver.toString());
@@ -388,7 +388,7 @@ public abstract class Critter {
 		if(!(fighter.x_coord == receiver.x_coord) || !(fighter.y_coord == receiver.y_coord)){
 			return;
 		}
-		if(fighter.energy == 0 || receiver.energy == 0) { return; }
+		if(fighter.energy <= 0 || receiver.energy <= 0) { return; }
 	
 		//both want to fight then 
 		int rollFight = 0;
@@ -422,16 +422,18 @@ public abstract class Critter {
 		// print world row by row. left border first then all critters or blank spaces than right boarder
 		for(int i = 0; i < Params.world_height; i++){
 			System.out.println();
-			for(int j = 0; j < Params.world_width + 1; j++){
-				if(j==0 || j == Params.world_width){  System.out.print("|");}
-				
+			for(int j = -1; j < Params.world_width + 1; j++){
 				boolean found = false;
-				for(int k = 0; k < population.size() && !found; k++){
-					// check if theres a critter  at the location marked (j,i)
-					if((population.get(k).x_coord == j) && (population.get(k).y_coord == i)){
-						System.out.print(population.get(k).toString());
-						found = true;
-					}
+				if (j == Params.world_width){  System.out.print("|"); break;}
+				else if(j==-1) {System.out.print("|"); found = true;}
+				else{
+					for(int k = 0; k < population.size() && !found; k++){
+						// check if theres a critter  at the location marked (j,i)
+						if((population.get(k).x_coord == j) && (population.get(k).y_coord == i)){
+							System.out.print(population.get(k).toString());
+							found = true;
+						}
+				}
 				}
 				
 				if(!found){

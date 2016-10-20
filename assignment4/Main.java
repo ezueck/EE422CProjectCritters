@@ -83,11 +83,21 @@ public class Main {
         	if(kb_inputs.length == 0){
         		// do nothing ie no command was inputed
         	}
-        	else if(keyboard_in.contentEquals("quit")){
-        		done = true;
+        	else if(kb_inputs[0].contentEquals("quit")){
+        		if(kb_inputs.length >1){
+        			System.out.println("error processing: " + keyboard_in);
+        		}
+        		else{
+        			done = true;
+        		}
         	}
-        	else if(keyboard_in.contentEquals("show")){
-        		Critter.displayWorld(); // MERDE
+        	else if(kb_inputs[0].contentEquals("show")){
+        		if(kb_inputs.length >1){
+        			System.out.println("error processing: " + keyboard_in);
+        		}
+        		else{
+        			Critter.displayWorld(); // MERDE
+        		}
         	}
         	else if(kb_inputs[0].contentEquals("step")){
         		// check for the number of steps
