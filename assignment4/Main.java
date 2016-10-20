@@ -69,10 +69,128 @@ public class Main {
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
         
-        System.out.println("GLHF");
+        // MERDE
+        
+        String keyboard_in = new String();
+        boolean done = false;
+        
+        while(!done){
+        	System.out.print("critters>");
+        	keyboard_in = kb.nextLine();
+        	String[] kb_inputs = keyboard_in.split(" ");	// splits the keyboard input into separate strings ie make Craig 25 will result in 3 strings
+        	if(kb_inputs.length == 0){
+        		// do nothing ie no command was inputed
+        	}
+        	else if(keyboard_in.contentEquals("quit")){
+        		done = true;
+        	}
+        	else if(keyboard_in.contentEquals("show")){
+        		Critter.displayWorld(); // MERDE
+        	}
+        	else if(kb_inputs[0].contentEquals("step")){
+        		// check for the number of steps
+        		int step_count = 0;
+        		if(kb_inputs.length == 1){
+        			step_count = 1;			// the command did not include a count thus set count to 1
+        		}
+        		else if(kb_inputs.length == 2){		// the command included a count
+        			step_count = getInt(kb_inputs[1]);
+        			if(step_count == -1){
+        				step_count = 0;
+        				System.out.println("error processing: " + keyboard_in);
+        			}
+        		}
+        		else{
+        			System.out.println("error processing: " + keyboard_in);
+        		}
+        		for(int i = 0; i < step_count; i++){
+        			Critter.worldTimeStep();
+        		}
+        	}
+        	else if(kb_inputs[0].contentEquals("seed")){
+        		long seed = 0;
+        		// get seed from keyboard
+        		if(kb_inputs.length == 1){		// no seed number was included in command, set to 1
+        			seed = 1; 
+        		}
+        		else if(kb_inputs.length == 2){
+        			seed = getInt(kb_inputs[1]);
+        			if(seed == -1){
+        				seed = 1;
+        				System.out.println("error processing: " + keyboard_in);
+        			}
+        		}
+        		else{
+        			System.out.println("error processing: " + keyboard_in);
+        		}
+
+        		Critter.setSeed(seed);
+        	}
+        	else if(kb_inputs[0].contentEquals("make")){
+        		if(kb_inputs.length == 1){
+        			System.out.println("error processing: " + keyboard_in);
+        		}
+        		else{
+        			int critter_count = 0;
+        			if(kb_inputs.length == 2){
+        				critter_count = 1;
+        			}
+        			else if(kb_inputs.length == 3){
+        				critter_count = getInt(kb_inputs[2]);
+        				if(critter_count == -1){
+        					critter_count = 0;
+        					System.out.println("error processing: " + keyboard_in);
+        				}
+        			}
+        			else{
+        				System.out.println("error processing: " + keyboard_in);
+        			}
+        			
+            		for(int i = 0; i < critter_count; i++){
+            			try {
+    						Critter.makeCritter(kb_inputs[1]);
+    					} catch (InvalidCritterException e) {
+    						// TODO Auto-generated catch block // MERDE
+    						e.printStackTrace();
+    					}
+            		}
+            		
+        		}
+        	}
+        	else if(kb_inputs[0].contentEquals("stats")){
+        		try {
+					List<Critter> my_list = Critter.getInstances(kb_inputs[1]);
+					Critter.runStats(my_list);
+				} catch (InvalidCritterException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	}
+        	else{
+        		System.out.println("invalid command: " + keyboard_in);
+        	}
+        }
         
         /* Write your code above */
         System.out.flush();
 
+    }
+    
+    
+	
+	// takes a string of integer and converts it to type int
+	// returns -1 if string contained non numerical char
+    static int getInt(String number){
+    	int count = 0;
+    	for(int i = 0; i < number.length(); i++){
+			if(((number.charAt(i) - '0') >= 0) && ((number.charAt(i) - '0') <= 9)){	// checks that the char is a number
+				count *= 10;
+				count += number.charAt(i) - '0';
+			}
+			else{
+				return -1;
+			}
+		}
+    	return count;
     }
 }
