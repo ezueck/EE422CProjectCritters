@@ -149,6 +149,7 @@ public abstract class Critter {
 		offspring.y_coord = y_coord;
 		offspring.moved = false;
 		offspring.my_move_fct(direction, 1);
+		babies.add(offspring);
 	}
 	
 
