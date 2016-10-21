@@ -61,6 +61,8 @@ package assignment4;
 		if(prev_run){
 			return true;
 		}
+		// else will walk away
+		walk(direction);
 		return false;
 	}	
 }
