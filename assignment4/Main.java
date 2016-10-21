@@ -1,12 +1,10 @@
-/* CRITTERS Main.java
+/* CRITTERS Critter.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * Eduardo Zueck Garces
+ * ez2959
+ * Pierre Follini
+ * pf4974
  * Slip days used: <0>
  * Fall 2016
  */
@@ -83,7 +81,7 @@ public class Main {
         	if(kb_inputs.length == 0){
         		// do nothing ie no command was inputed
         	}
-        	else if(kb_inputs[0].contentEquals("quit")){
+        	else if(keyboard_in.contentEquals("quit")){
         		if(kb_inputs.length >1){
         			System.out.println("error processing: " + keyboard_in);
         		}
@@ -133,7 +131,7 @@ public class Main {
         			}
         		}
         		else{
-        			System.out.println("error processing: " + keyboard_in);
+        			System.out.println("invalid command: " + keyboard_in);
         		}
 
         		Critter.setSeed(seed);
@@ -163,8 +161,7 @@ public class Main {
     						Critter.makeCritter(kb_inputs[1]);
     					} catch (InvalidCritterException e) {
     						// TODO Auto-generated catch block // MERDE
-    						e.printStackTrace();
-    						System.out.print("\n");
+    						System.out.println("error processing: " + keyboard_in);
     					}
             		}
             		
@@ -179,8 +176,7 @@ public class Main {
 					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.out.print("\n");
+					System.out.println("error processing: " + keyboard_in);
 				}
         	}
         	else{

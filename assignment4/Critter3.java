@@ -1,5 +1,24 @@
+/* CRITTERS Critter.java
+ * EE422C Project 4 submission by
+ * Replace <...> with your actual data.
+ * Eduardo Zueck Garces
+ * ez2959
+ * Pierre Follini
+ * pf4974
+ * Slip days used: <0>
+ * Fall 2016
+ */
 package assignment4;
 import java.util.*;
+
+/*
+ * Author: Eduardo Zueck Garces
+ * UT EID: ez2959
+ * Date: 16 - OCT - 16
+ * Project 4 - Critters
+ * Critter 2
+ */
+ 
 
 public class Critter3 extends Critter{
 
@@ -10,7 +29,7 @@ public class Critter3 extends Critter{
 	}
 	
 	@Override
-	public String toString(){ return "4";}
+	public String toString(){ return "3";}
 	
 	@Override 
 	public void doTimeStep(){

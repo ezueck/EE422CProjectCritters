@@ -1,12 +1,10 @@
 /* CRITTERS Critter.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * Eduardo Zueck Garces
+ * ez2959
+ * Pierre Follini
+ * pf4974
  * Slip days used: <0>
  * Fall 2016
  */
@@ -318,6 +316,9 @@ public abstract class Critter {
 		babies.clear();
 	}
 	
+	/*
+	 * simulates one step in our world
+	 */
 	public static void worldTimeStep() {
 		
 		//run all of the doTimeSteps 
@@ -375,6 +376,11 @@ public abstract class Critter {
 
 	}
 	
+	
+	/*
+	 * simulates the encounter between the two critters 
+	 * @params: fighter, receiver Critters that are part of the encounter 
+	 */
 	public static void simulateEncounter(Critter fighter, Critter receiver){
 		
 		//dead bugs can't fight 
@@ -412,6 +418,10 @@ public abstract class Critter {
 		}
 	}
 	
+	/*
+	 * displays the current state of our world 
+	 * static function for all critters 
+	 */
 	public static void displayWorld() {
 		// display top boarder
 		System.out.print("+");
