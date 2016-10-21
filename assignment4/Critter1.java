@@ -23,7 +23,7 @@ public class Critter1 extends Critter{
 	@Override
 	public void doTimeStep() {
 		// walks or run with equal chance
-		// 2x more likely to go down (direction 4-7)
+		// 2x more likely to go up (direction 1-3)
 		int[] prob_dir = new int[8];
 		for(int i = 0; i < 8; i++){
 			prob_dir[i] = Critter.getRandomInt(50);
